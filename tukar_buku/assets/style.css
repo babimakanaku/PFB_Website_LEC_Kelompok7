@@ -1,0 +1,232 @@
+/* =========================================
+   1. GLOBAL STYLES & TYPOGRAPHY
+   ========================================= */
+
+/* ... kode sebelumnya ... */
+
+.container {
+    width: 90%; /* Hanya 90% dari lebar layar */
+    max-width: 800px; /* Batas maksimum lebar agar form tidak terlalu lebar di layar besar */
+    margin: 40px auto; /* Memberi margin 40px di atas/bawah dan 'auto' di kiri/kanan (untuk centering) */
+    padding: 20px; /* Ruang di DALAM container (di antara form dan batas container) */
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   1. GLOBAL STYLES & TYPOGRAPHY
+   ========================================= */
+:root {
+    --primary-color: #007bff; /* Biru */
+    --secondary-color: #6c757d; /* Abu-abu */
+    --success-color: #28a745; /* Hijau */
+    --warning-color: #ffc107; /* Kuning */
+    --danger-color: #dc3545; /* Merah */
+    --bg-light: #f8f9fa;
+    --font-family: Arial, sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-light);
+    color: #343a40;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    color: #343a40;
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 5px;
+}
+
+h2{
+    text-align: center;
+}
+
+/* Link Styling */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* =========================================
+   2. HEADER & NAVIGATION
+   ========================================= */
+header {
+    text-align: center;
+    padding: 15px 0;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+header h1 {
+    color: white;
+    border-bottom: none;
+}
+
+header nav a {
+    color: white;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+header nav a:hover {
+    color: #ddd;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #dee2e6;
+    margin: 20px 0;
+}
+
+/* =========================================
+   3. FORMS (Login, Register, Tambah Buku, Edit Buku)
+   ========================================= */
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box; /* Penting agar padding tidak melebarkan elemen */
+}
+
+button[type="submit"] {
+    background-color: var(--success-color);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #1e7e34;
+}
+
+/* Pesan Feedback */
+.feedback-success {
+    color: var(--success-color);
+    font-weight: bold;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    background-color: #d4edda;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.feedback-error {
+    color: var(--danger-color);
+    font-weight: bold;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    background-color: #f8d7da;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+
+/* =========================================
+   4. CATALOG (index.php)
+   ========================================= */
+
+.book-catalog {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* --- BARIS KRITIS UNTUK CENTERING --- */
+    justify-content: center; 
+    /* ------------------------------------- */
+    padding: 10px 0; /* Tambahkan sedikit padding jika perlu */
+}
+
+/* Kartu Buku */
+.book-card {
+    border: 1px solid #e9ecef;
+    padding: 15px;
+    width: calc(33.333% - 20px); /* 3 kartu per baris */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    background: #fff;
+    min-width: 250px;
+}
+
+/* Kode Baru untuk Mengatur Ukuran Gambar */
+.book-card img {
+    width: 100%;
+    height: 300px; 
+    /* --- BARIS KRITIS BARU: object-fit: contain --- */
+    object-fit: contain; 
+    /* ----------------------------------------------- */
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.book-card h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Status dan Tombol Aksi */
+.status-available {
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+.status-requested, .status-borrowed {
+    color: var(--warning-color);
+    font-weight: bold;
+}
+
+.request-button {
+    background-color: var(--success-color);
+    color: white !important; /* !important untuk override link styling */
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.request-button:hover {
+    background-color: #1e7e34;
+    text-decoration: none;
+}
