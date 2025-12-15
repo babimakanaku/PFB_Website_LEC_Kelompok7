@@ -41,28 +41,44 @@ $conn->close();
 <html lang="id">
 <head>
     <title>Login - Tukar Buku</title>
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
-    <h2>Form Login</h2>
-    <?php 
-    if (isset($_GET['success']) && $_GET['success'] == 1): 
-        echo '<p style="color: green;">Registrasi berhasil! Silakan login.</p>';
-    endif;
-    if ($error): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
+    <header>
+        <h1>Pustaka Digital: Tukar & Pinjam Buku</h1>
+    </header>
+
+    <hr>
     
-    <form action="login.php" method="POST">
-        <div>
-            <label for="username_or_email">Username atau Email:</label>
-            <input type="text" id="username_or_email" name="username_or_email" required>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Login</button>
-    </form>
-    <p>Belum punya akun? <a href="register.php">Daftar di sini</a>.</p>
+    <div class="container"> 
+    
+        <h2>Form Login</h2> 
+        
+        <?php 
+        // Mengganti inline style dengan class CSS
+        if (isset($_GET['success']) && $_GET['success'] == 1): 
+            echo '<p class="feedback-success">Registrasi berhasil! Silakan login.</p>';
+        endif;
+        
+        if ($error): ?>
+            <p class="feedback-error">ERROR: <?php echo $error; ?></p>
+        <?php endif; ?>
+        
+        <form action="login.php" method="POST">
+            <div>
+                <label for="username_or_email">Username atau Email:</label>
+                <input type="text" id="username_or_email" name="username_or_email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        
+        <p>Belum punya akun? <a href="register.php">Daftar di sini</a>.</p>
+        
+    </div> 
+
 </body>
 </html>

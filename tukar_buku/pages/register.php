@@ -54,28 +54,43 @@ $conn->close();
 <html lang="id">
 <head>
     <title>Register - Tukar Buku</title>
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
-    <h2>Form Registrasi</h2>
-    <?php if ($error): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
-    
-    <form action="register.php" method="POST">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Daftar</button>
-    </form>
-    <p>Sudah punya akun? <a href="login.php">Login di sini</a>.</p>
+    <header>
+        <h1>Daftar Akun Baru</h1>
+    </header>
+
+    <hr>
+
+    <div class="container"> 
+        <h2>Form Registrasi</h2>
+        
+        <?php 
+        // Mengganti inline style dengan class="feedback-error"
+        if ($error): ?>
+            <p class="feedback-error">ERROR: <?php echo $error; ?></p>
+        <?php endif; ?>
+        
+        <form action="register.php" method="POST">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit">Daftar</button>
+        </form>
+        
+        <p>Sudah punya akun? <a href="login.php">Login di sini</a>.</p>
+        
+    </div> 
 </body>
 </html>
