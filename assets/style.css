@@ -1,28 +1,19 @@
-/* =========================================
-   1. GLOBAL STYLES & TYPOGRAPHY
-   ========================================= */
-
-/* ... kode sebelumnya ... */
-
 .container {
-    width: 90%; /* Hanya 90% dari lebar layar */
-    max-width: 800px; /* Batas maksimum lebar agar form tidak terlalu lebar di layar besar */
-    margin: 40px auto; /* Memberi margin 40px di atas/bawah dan 'auto' di kiri/kanan (untuk centering) */
-    padding: 20px; /* Ruang di DALAM container (di antara form dan batas container) */
+    width: 90%;
+    max-width: 800px; 
+    margin: 40px auto; 
+    padding: 20px; 
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* =========================================
-   1. GLOBAL STYLES & TYPOGRAPHY
-   ========================================= */
 :root {
-    --primary-color: #007bff; /* Biru */
-    --secondary-color: #6c757d; /* Abu-abu */
-    --success-color: #28a745; /* Hijau */
-    --warning-color: #ffc107; /* Kuning */
-    --danger-color: #dc3545; /* Merah */
+    --primary-color: #007bff; 
+    --secondary-color: #6c757d; 
+    --success-color: #28a745; 
+    --warning-color: #ffc107; 
+    --danger-color: #dc3545; 
     --bg-light: #f8f9fa;
     --font-family: Arial, sans-serif;
 }
@@ -32,8 +23,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    /* UBAH: Gunakan warna latar yang lebih cerah/berwarna di body */
-    background-color: #e6f7ff; /* Light Cyan/Biru Langit Sangat Muda */
+    background-color: #e6f7ff;
     color: #343a40;
 }
 
@@ -42,7 +32,7 @@ body {
     max-width: 1200px;
     margin: 40px auto;
     padding: 20px;
-    background: #ffffff; /* Biarkan container utama tetap putih agar konten mudah dibaca */
+    background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
@@ -57,7 +47,6 @@ h2{
     text-align: center;
 }
 
-/* Link Styling */
 a {
     color: var(--primary-color);
     text-decoration: none;
@@ -69,11 +58,7 @@ a:hover {
     text-decoration: underline;
 }
 
-/* =========================================
-   2. HEADER & NAVIGATION
-   ========================================= */
 header {
-    /* Sudah menggunakan var(--primary-color), jadi sudah berwarna */
     text-align: center;
     padding: 15px 0;
     background-color: var(--primary-color);
@@ -98,13 +83,11 @@ header nav a:hover {
 hr {
     border: 0;
     height: 1px;
-    background-color: #b3d9ff; /* Warna biru muda */
+    background-color: #b3d9ff;
     margin: 20px 0;
 }
 
-/* =========================================
-   3. FORMS (Login, Register, Tambah Buku, Edit Buku)
-   ========================================= */
+
 form div {
     margin-bottom: 15px;
 }
@@ -124,7 +107,7 @@ select {
     padding: 10px;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    box-sizing: border-box; /* Penting agar padding tidak melebarkan elemen */
+    box-sizing: border-box;
 }
 
 button[type="submit"] {
@@ -141,68 +124,53 @@ button[type="submit"]:hover {
     background-color: #1e7e34;
 }
 
-/* Pesan Feedback */
 .feedback-success {
     color: var(--success-color);
     font-weight: bold;
-    border: 1px solid var(--success-color); /* Border sesuai warna sukses */
+    border: 1px solid var(--success-color);
     padding: 10px;
-    background-color: #e6ffe6; /* Light Green Background */
-    border-radius: 4px;
+    background-color: #e6ffe6;
     margin-bottom: 20px;
 }
 
 .feedback-error {
     color: var(--danger-color);
     font-weight: bold;
-    border: 1px solid var(--danger-color); /* Border sesuai warna error */
+    border: 1px solid var(--danger-color);
     padding: 10px;
-    background-color: #ffe6e6; /* Light Red Background */
+    background-color: #ffe6e6; 
     border-radius: 4px;
     margin-bottom: 20px;
 }
-
-
-
-/* =========================================
-   4. CATALOG (index.php)
-   ========================================= */
 
 .book-catalog {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    /* --- BARIS KRITIS UNTUK CENTERING --- */
     justify-content: center; 
-    /* ------------------------------------- */
-    padding: 10px 0; /* Tambahkan sedikit padding jika perlu */
+    padding: 10px 0;
 }
 
-/* Kartu Buku */
 .book-card {
-    /* UBAH: Background Kartu Buku */
-    background: #fffafa; /* Warna yang sedikit lebih hangat (Snow White) */
-    border: 1px solid #cccccc; /* Border abu-abu yang lebih jelas */
+    background: #fffafa;
+    border: 1px solid #cccccc; 
     padding: 15px;
     width: calc(33.333% - 20px); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow lebih menonjol */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     border-radius: 6px;
     min-width: 250px;
     transition: transform 0.2s;
 }
 
 .book-card:hover {
-    transform: translateY(-3px); /* Efek hover untuk kesan interaktif */
+    transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Kode Baru untuk Mengatur Ukuran Gambar */
 .book-card img {
     width: 100%;
     height: 300px; 
-    /* --- BARIS KRITIS BARU: object-fit: contain --- */
     object-fit: contain; 
-    /* ----------------------------------------------- */
     border-radius: 4px;
     margin-bottom: 10px;
 }
@@ -214,7 +182,6 @@ button[type="submit"]:hover {
     padding-bottom: 0;
 }
 
-/* Status dan Tombol Aksi */
 .status-available {
     color: var(--success-color);
     font-weight: bold;
@@ -227,7 +194,7 @@ button[type="submit"]:hover {
 
 .request-button {
     background-color: var(--success-color);
-    color: white !important; /* !important untuk override link styling */
+    color: white !important;
     padding: 5px 10px;
     border-radius: 3px;
     text-decoration: none;
@@ -240,13 +207,10 @@ button[type="submit"]:hover {
     text-decoration: none;
 }
 
-/* =========================================
-   5. FILTER STYLES
-   ========================================= */
+
 .filter-container {
-    /* UBAH: Background yang lebih berwarna untuk kotak filter */
-    background-color: #f0f8ff; /* Warna yang lebih cerah dan lembut (Azure) */
-    border: 1px solid #cceeff; /* Border berwarna */
+    background-color: #f0f8ff;
+    border: 1px solid #cceeff; 
     padding: 15px;
     margin-bottom: 30px;
     border-radius: 8px;
@@ -259,11 +223,11 @@ button[type="submit"]:hover {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
-    align-items: flex-end; /* Memastikan tombol reset sejajar dengan select */
+    align-items: flex-end; 
 }
 
 .filter-form label {
-    font-weight: normal; /* Jangan terlalu tebal */
+    font-weight: normal; 
 }
 
 .filter-form select {
@@ -273,7 +237,7 @@ button[type="submit"]:hover {
 }
 
 .reset-button {
-    background-color: var(--secondary-color); /* Abu-abu */
+    background-color: var(--secondary-color); 
     color: white !important;
     padding: 8px 12px;
     border-radius: 4px;
@@ -287,13 +251,8 @@ button[type="submit"]:hover {
 }
 
 
-/* =========================================
-   6. ACTION BUTTONS
-   ========================================= */
-
-/* Tombol Batalkan Permintaan (Warna Merah/Orange) */
 .cancel-button {
-    background-color: #dc3545; /* Merah */
+    background-color: #dc3545; 
     color: white !important;
     padding: 5px 10px;
     text-decoration: none;

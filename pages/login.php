@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username_or_email = $conn->real_escape_string($_POST['username_or_email']);
     $password = $_POST['password'];
 
-    // Cari user berdasarkan username atau email
     $sql = "SELECT id, username, password FROM users WHERE username = ? OR email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $username_or_email, $username_or_email);
@@ -17,14 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
-        
-        // Verifikasi password yang dimasukkan dengan hash di database
+
         if (password_verify($password, $user['password'])) {
-            // Login Berhasil!
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
 
-            header("Location: index.php"); // Arahkan ke halaman utama
+            header("Location: index.php");
             exit;
         } else {
             $error = "Password salah.";
@@ -55,7 +52,6 @@ $conn->close();
         <h2>Form Login</h2> 
         
         <?php 
-        // Mengganti inline style dengan class CSS
         if (isset($_GET['success']) && $_GET['success'] == 1): 
             echo '<p class="feedback-success">Registrasi berhasil! Silakan login.</p>';
         endif;

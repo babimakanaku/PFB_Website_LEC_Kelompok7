@@ -11,7 +11,6 @@ $username = htmlspecialchars($_SESSION['username']);
 $error = '';
 $success = '';
 
-// --- 1. Dapatkan Daftar BUKU YANG SAYA UNGGAH (Owned Books) ---
 $sql_owned = "SELECT id, title, author, status FROM books WHERE user_id = ? ORDER BY uploaded_at DESC";
 $stmt_owned = $conn->prepare($sql_owned);
 $stmt_owned->bind_param("i", $current_user_id);
@@ -19,21 +18,16 @@ $stmt_owned->execute();
 $result_owned = $stmt_owned->get_result();
 $stmt_owned->close();
 
-// --- 2. Dapatkan Daftar BUKU YANG SAYA MINTA/PINJAM (Borrowed Books) ---
-// Catatan: QUERY INI BERFUNGSI JIKA KOLOM 'borrower_id' SUDAH ADA DI TABEL 'books'
 $sql_borrowed = "SELECT b.id, b.title, b.author, b.status, u.username AS owner_username 
                  FROM books b 
                  JOIN users u ON b.user_id = u.id 
-                 WHERE b.borrower_id = ? AND b.user_id != ?"; // Filter buku milik user lain
+                 WHERE b.borrower_id = ? AND b.user_id != ?";
                  
 $stmt_borrowed = $conn->prepare($sql_borrowed);
 $stmt_borrowed->bind_param("ii", $current_user_id, $current_user_id);
 $stmt_borrowed->execute();
 $result_borrowed = $stmt_borrowed->get_result();
 $stmt_borrowed->close();
-
-// Tambahkan logika feedback jika diperlukan
-// if (isset($_GET['success'])) { ... }
 
 $conn->close();
 ?> 

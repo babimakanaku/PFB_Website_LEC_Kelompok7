@@ -2,7 +2,6 @@
 session_start();
 include '../includes/db_connect.php'; 
 
-// Cek apakah user sudah login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -10,9 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $current_user_id = $_SESSION['user_id'];
 
-// --- 1. Ambil ID Buku dari URL ---
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    // Jika ID tidak valid, kembali ke index.php
     header("Location: index.php?error=invalid_book_id");
     exit;
 }
@@ -20,7 +17,6 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $book_id = (int)$_GET['id'];
 $book = null;
 
-// --- 2. Ambil Data Buku Berdasarkan ID ---
 $sql = "SELECT b.*, u.username AS owner_username, u.email AS owner_email 
         FROM books b 
         JOIN users u ON b.user_id = u.id 
@@ -34,7 +30,6 @@ $result = $stmt->get_result();
 if ($result->num_rows === 1) {
     $book = $result->fetch_assoc();
 } else {
-    // Buku tidak ditemukan
     header("Location: index.php?error=book_not_found");
     exit;
 }
@@ -89,12 +84,9 @@ $conn->close();
             </p>
             
             <?php 
-            // --- Logika Tombol Aksi di Halaman Detail ---
             if ($book['user_id'] != $current_user_id && $book['status'] == 'Tersedia') {
-                // Tombol Permintaan untuk user lain
                 echo '<p><a href="request_book.php?book_id=' . $book['id'] . '" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">✅ Minta Tukar/Pinjam Buku Ini</a></p>';
             } elseif ($book['user_id'] == $current_user_id) {
-                // Tombol Edit/Hapus untuk pemilik buku
                 echo '<p>
                         <a href="edit_buku.php?id=' . $book['id'] . '">✏️ Edit Informasi Buku</a> | 
                         <a href="delete_buku.php?id=' . $book['id'] . '" onclick="return confirm(\'Yakin ingin menghapus buku ini?\')">🗑️ Hapus Buku</a>

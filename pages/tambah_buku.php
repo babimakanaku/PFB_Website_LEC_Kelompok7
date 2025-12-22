@@ -2,7 +2,6 @@
 session_start();
 include '../includes/db_connect.php';
 
-// Cek apakah user sudah login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -12,57 +11,46 @@ $user_id = $_SESSION['user_id'];
 $success = '';
 $error = '';
 
-// --- Proses Form Submission ---
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ambil data dari form
+
     $title = $conn->real_escape_string($_POST['title']);
     $author = $conn->real_escape_string($_POST['author']);
     $description = $conn->real_escape_string($_POST['description']);
     $condition = $conn->real_escape_string($_POST['condition']);
-    
-    // Inisialisasi path gambar
+ 
     $image_path = '';
-
-    // --- Penanganan Upload Gambar ---
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $target_dir = "../uploads/"; // Folder tujuan upload
+        $target_dir = "../uploads/";
         $file_name = basename($_FILES["image"]["name"]);
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-        $unique_name = time() . '_' . uniqid() . '.' . $file_ext; // Nama file unik
+        $unique_name = time() . '_' . uniqid() . '.' . $file_ext; 
         $target_file = $target_dir . $unique_name;
-        $image_path_db = "uploads/" . $unique_name; // Path yang disimpan di database
+        $image_path_db = "uploads/" . $unique_name;
 
-        // Cek tipe file yang diperbolehkan
         $allowed_ext = array("jpg", "jpeg", "png", "gif");
         if (!in_array($file_ext, $allowed_ext)) {
             $error = "Hanya file JPG, JPEG, PNG, & GIF yang diizinkan.";
         } 
-        
-        // Cek ukuran file (Misal: maksimal 5MB)
+
         elseif ($_FILES["image"]["size"] > 5000000) { 
             $error = "Maaf, ukuran file terlalu besar (maks 5MB).";
         } 
-        
-        // Lakukan proses upload
+
         elseif (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-            $image_path = $image_path_db; // Simpan path jika upload berhasil
+            $image_path = $image_path_db;
         } else {
             $error = "Terjadi kesalahan saat mengunggah file.";
         }
     }
-    
-    // --- Simpan Data ke Database jika tidak ada error ---
+
     if (empty($error)) {
-        // Query menggunakan Prepared Statement
         $sql = "INSERT INTO books (user_id, title, author, description, `condition`, image_path) VALUES (?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($sql);
-        // "isssss" -> integer (user_id) dan lima string (title, author, description, condition, image_path)
         $stmt->bind_param("isssss", $user_id, $title, $author, $description, $condition, $image_path);
         
         if ($stmt->execute()) {
             $success = "Buku **$title** berhasil ditambahkan ke katalog!";
-            // Reset input (opsional: bisa di-redirect ke index.php juga)
         } else {
             $error = "Gagal menambahkan buku: " . $conn->error;
         }

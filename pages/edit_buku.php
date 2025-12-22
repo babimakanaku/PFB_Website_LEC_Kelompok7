@@ -11,7 +11,6 @@ $current_user_id = $_SESSION['user_id'];
 $success = '';
 $error = '';
 
-// --- 1. Validasi ID dan Ambil Data Buku Awal ---
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: index.php?error=invalid_id_edit");
     exit;
@@ -19,7 +18,6 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $book_id = (int)$_GET['id'];
 
-// Query untuk mengambil data buku yang akan diedit
 $sql_select = "SELECT * FROM books WHERE id = ?";
 $stmt_select = $conn->prepare($sql_select);
 $stmt_select->bind_param("i", $book_id);
@@ -34,13 +32,11 @@ if ($result_select->num_rows === 0) {
 $book_data = $result_select->fetch_assoc();
 $stmt_select->close();
 
-// --- Guardrail: Pastikan Hanya Pemilik yang Bisa Edit ---
 if ($book_data['user_id'] != $current_user_id) {
     header("Location: index.php?error=not_owner");
     exit;
 }
 
-// --- 2. Proses Form Submission (UPDATE) ---
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $conn->real_escape_string($_POST['title']);
     $author = $conn->real_escape_string($_POST['author']);
@@ -48,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $condition = $conn->real_escape_string($_POST['condition']);
     $image_path = $book_data['image_path']; // Pertahankan path lama
 
-    // --- Penanganan Upload Gambar Baru ---
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $target_dir = "../uploads/"; 
         $file_name = basename($_FILES["image"]["name"]);
@@ -57,32 +52,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_file = $target_dir . $unique_name;
         $new_image_path = "uploads/" . $unique_name;
 
-        // Cek tipe file dan ukuran, lalu pindahkan
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-            // Hapus gambar lama (jika ada)
             if (!empty($book_data['image_path'])) {
                 $old_file = '../' . $book_data['image_path'];
                 if (file_exists($old_file)) {
                     unlink($old_file);
                 }
             }
-            $image_path = $new_image_path; // Update path baru
+            $image_path = $new_image_path;
         } else {
             $error = "Terjadi kesalahan saat mengunggah gambar baru.";
         }
     }
-    
-    // --- Lakukan Update ke Database ---
+
     if (empty($error)) {
         $sql_update = "UPDATE books SET title = ?, author = ?, description = ?, `condition` = ?, image_path = ? WHERE id = ?";
         
         $stmt_update = $conn->prepare($sql_update);
-        // "sssssi" -> 5 string, 1 integer
         $stmt_update->bind_param("sssssi", $title, $author, $description, $condition, $image_path, $book_id);
         
         if ($stmt_update->execute()) {
             $success = "Data buku **$title** berhasil diperbarui!";
-            // Ambil ulang data terbaru setelah update agar form menampilkan nilai yang benar
             $book_data['title'] = $title;
             $book_data['author'] = $author;
             $book_data['description'] = $description;
